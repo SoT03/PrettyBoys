@@ -189,46 +189,56 @@ export default function NewMatchForm({
 				<h3 className='text-sm font-bold text-zinc-400 uppercase mb-3'>⚽ Gole</h3>
 				<div className='flex flex-col gap-2 mb-3'>
 					{goals.map((g, i) => (
-						<div key={i} className='flex flex-wrap items-center gap-2 bg-zinc-800 p-2 rounded-md'>
-							<select
-								value={g.playerId}
-								onChange={(e) => updateGoalRow(i, { playerId: e.target.value })}
-								className='px-2 py-1 rounded text-black text-sm'>
-								{players.map((p) => (
-									<option key={p.id} value={p.id}>
-										{p.firstName} {p.lastName}
-									</option>
-								))}
-							</select>
-							<span className='text-zinc-400 text-sm'>asysta:</span>
-							<select
-								value={g.assistPlayerId}
-								onChange={(e) => updateGoalRow(i, { assistPlayerId: e.target.value })}
-								className='px-2 py-1 rounded text-black text-sm'>
-								<option value=''>— brak —</option>
-								{players
-									.filter((p) => p.id !== g.playerId)
-									.map((p) => (
-										<option key={p.id} value={p.id}>
-											{p.firstName} {p.lastName}
-										</option>
-									))}
-							</select>
-							<input
-								type='number'
-								min={1}
-								max={130}
-								placeholder="min'"
-								value={g.minute}
-								onChange={(e) => updateGoalRow(i, { minute: e.target.value })}
-								className='w-16 px-2 py-1 rounded text-black text-sm'
-							/>
-							<button
-								type='button'
-								onClick={() => removeGoalRow(i)}
-								className='text-red-400 hover:text-red-300 text-xs ml-auto'>
-								Usuń
-							</button>
+						<div key={i} className='bg-zinc-800 p-3 rounded-md'>
+							<div className='grid grid-cols-2 gap-2 sm:flex sm:items-end sm:flex-wrap'>
+								<label className='flex flex-col text-xs text-zinc-400 col-span-2 sm:col-span-1'>
+									Strzelec
+									<select
+										value={g.playerId}
+										onChange={(e) => updateGoalRow(i, { playerId: e.target.value })}
+										className='px-2 py-1 rounded text-black text-sm mt-1'>
+										{players.map((p) => (
+											<option key={p.id} value={p.id}>
+												{p.firstName} {p.lastName}
+											</option>
+										))}
+									</select>
+								</label>
+								<label className='flex flex-col text-xs text-zinc-400 col-span-2 sm:col-span-1'>
+									Asysta
+									<select
+										value={g.assistPlayerId}
+										onChange={(e) => updateGoalRow(i, { assistPlayerId: e.target.value })}
+										className='px-2 py-1 rounded text-black text-sm mt-1'>
+										<option value=''>— brak —</option>
+										{players
+											.filter((p) => p.id !== g.playerId)
+											.map((p) => (
+												<option key={p.id} value={p.id}>
+													{p.firstName} {p.lastName}
+												</option>
+											))}
+									</select>
+								</label>
+								<label className='flex flex-col text-xs text-zinc-400'>
+									Minuta
+									<input
+										type='number'
+										min={1}
+										max={130}
+										placeholder="min'"
+										value={g.minute}
+										onChange={(e) => updateGoalRow(i, { minute: e.target.value })}
+										className='w-20 px-2 py-1 rounded text-black text-sm mt-1'
+									/>
+								</label>
+								<button
+									type='button'
+									onClick={() => removeGoalRow(i)}
+									className='text-red-400 hover:text-red-300 text-xs h-fit py-1 sm:ml-auto'>
+									Usuń
+								</button>
+							</div>
 						</div>
 					))}
 					{goals.length === 0 && <p className='text-zinc-500 text-sm'>Brak dodanych goli.</p>}

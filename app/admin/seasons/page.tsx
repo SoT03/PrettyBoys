@@ -35,7 +35,7 @@ export default async function AdminSeasonsPage({
 
 	return (
 		<div className='min-h-screen bg-zinc-800 p-6 md:p-10'>
-			<div className='flex items-center justify-between mb-6'>
+			<div className='flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-6'>
 				<h1 className='text-3xl font-bold text-white'>Tabela ligowa</h1>
 				<Link href='/admin' className='text-pink-400 hover:underline'>
 					← Powrót
@@ -81,68 +81,62 @@ export default async function AdminSeasonsPage({
 						)}
 					</div>
 
-					<div className='overflow-x-auto'>
-						<table className='w-full text-white border-collapse text-sm'>
-							<thead>
-								<tr className='text-left text-zinc-400'>
-									{fields.map((f) => (
-										<th key={f.key} className='p-2'>
-											{f.label}
-										</th>
-									))}
-									<th className='p-2' />
-								</tr>
-							</thead>
-							<tbody>
-								{active.standings.map((row) => (
-									<tr key={row.id} className='border-t border-zinc-700'>
-										<td colSpan={fields.length + 1} className='p-0'>
-											<form
-												action={updateStandingsRow.bind(null, row.id)}
-												className='flex items-center gap-2 p-2'>
-												{fields.map((f) => (
-													<input
-														key={f.key}
-														name={f.key}
-														type={f.key === 'team' ? 'text' : 'number'}
-														defaultValue={row[f.key]}
-														className='px-2 py-1 rounded text-black w-20'
-													/>
-												))}
-												<button className='px-3 py-1 bg-zinc-600 text-white rounded hover:bg-zinc-500'>
-													Zapisz
-												</button>
-											</form>
-										</td>
-										<td className='p-2 text-right'>
-											<form action={deleteStandingsRow.bind(null, row.id)}>
-												<button className='px-3 py-1 bg-red-500 text-white rounded'>Usuń</button>
-											</form>
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
+					<div className='flex flex-col gap-4'>
+						{active.standings.map((row) => (
+							<div key={row.id} className='p-4 bg-zinc-900 rounded-md border-2 border-pink-300'>
+								<form action={updateStandingsRow.bind(null, row.id)} className='space-y-3'>
+									<div className='grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-9'>
+										{fields.map((f) => (
+											<label key={f.key} className='flex flex-col text-xs text-zinc-400'>
+												{f.label}
+												<input
+													name={f.key}
+													type={f.key === 'team' ? 'text' : 'number'}
+													defaultValue={row[f.key]}
+													className='px-2 py-1 rounded text-black text-sm mt-1'
+												/>
+											</label>
+										))}
+									</div>
+									<div className='flex items-center gap-3'>
+										<button className='px-3 py-1 bg-zinc-600 text-white rounded hover:bg-zinc-500 text-sm'>
+											Zapisz
+										</button>
+										<button
+											formAction={deleteStandingsRow.bind(null, row.id)}
+											className='px-3 py-1 bg-red-500 text-white rounded text-sm'>
+											Usuń
+										</button>
+									</div>
+								</form>
+							</div>
+						))}
+						{active.standings.length === 0 && (
+							<p className='text-zinc-400 text-sm'>Brak drużyn w tabeli. Dodaj pierwszą poniżej.</p>
+						)}
 					</div>
 
-					<form
-						action={addStandingsRow.bind(null, active.id)}
-						className='flex flex-wrap items-center gap-2 mt-4 p-4 bg-zinc-900 rounded-md border border-dashed border-zinc-600'>
-						<span className='text-sm text-zinc-400 mr-2'>Dodaj drużynę:</span>
-						{fields.map((f) => (
-							<input
-								key={f.key}
-								name={f.key}
-								type={f.key === 'team' ? 'text' : 'number'}
-								placeholder={f.label}
-								defaultValue={f.key === 'position' ? active.standings.length + 1 : undefined}
-								className='px-2 py-1 rounded text-black w-20'
-							/>
-						))}
-						<button className='px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600'>
-							+ Dodaj
-						</button>
-					</form>
+					<div className='mt-4 p-4 bg-zinc-900 rounded-md border border-dashed border-zinc-600'>
+						<h3 className='text-sm text-zinc-400 mb-3'>Dodaj drużynę</h3>
+						<form action={addStandingsRow.bind(null, active.id)} className='space-y-3'>
+							<div className='grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-9'>
+								{fields.map((f) => (
+									<label key={f.key} className='flex flex-col text-xs text-zinc-400'>
+										{f.label}
+										<input
+											name={f.key}
+											type={f.key === 'team' ? 'text' : 'number'}
+											defaultValue={f.key === 'position' ? active.standings.length + 1 : undefined}
+											className='px-2 py-1 rounded text-black text-sm mt-1'
+										/>
+									</label>
+								))}
+							</div>
+							<button className='px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 text-sm'>
+								+ Dodaj
+							</button>
+						</form>
+					</div>
 				</>
 			)}
 

@@ -116,14 +116,14 @@ export default async function StatisticsPage({
 								<table className='w-full text-white text-left border-collapse'>
 									<thead>
 										<tr className='bg-zinc-700 text-sm'>
-											<th className='p-3'>#</th>
-											<th className='p-3'>Drużyna</th>
-											<th className='p-3 text-center'>M</th>
-											<th className='p-3 text-center'>W</th>
-											<th className='p-3 text-center'>R</th>
-											<th className='p-3 text-center'>P</th>
-											<th className='p-3 text-center'>Bramki</th>
-											<th className='p-3 text-center'>Pkt</th>
+											<th className='p-2 sm:p-3'>#</th>
+											<th className='p-2 sm:p-3'>Drużyna</th>
+											<th className='p-2 sm:p-3 text-center'>M</th>
+											<th className='p-2 sm:p-3 text-center hidden sm:table-cell'>W</th>
+											<th className='p-2 sm:p-3 text-center hidden sm:table-cell'>R</th>
+											<th className='p-2 sm:p-3 text-center hidden sm:table-cell'>P</th>
+											<th className='p-2 sm:p-3 text-center'>Bramki</th>
+											<th className='p-2 sm:p-3 text-center'>Pkt</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -133,16 +133,16 @@ export default async function StatisticsPage({
 												className={`border-t border-zinc-700 ${
 													row.team === 'Pretty Boys' ? 'bg-pink-500/10' : ''
 												}`}>
-												<td className='p-3'>{row.position}</td>
-												<td className='p-3 font-semibold'>{row.team}</td>
-												<td className='p-3 text-center'>{row.played}</td>
-												<td className='p-3 text-center'>{row.win}</td>
-												<td className='p-3 text-center'>{row.draw}</td>
-												<td className='p-3 text-center'>{row.loss}</td>
-												<td className='p-3 text-center'>
+												<td className='p-2 sm:p-3'>{row.position}</td>
+												<td className='p-2 sm:p-3 font-semibold'>{row.team}</td>
+												<td className='p-2 sm:p-3 text-center'>{row.played}</td>
+												<td className='p-2 sm:p-3 text-center hidden sm:table-cell'>{row.win}</td>
+												<td className='p-2 sm:p-3 text-center hidden sm:table-cell'>{row.draw}</td>
+												<td className='p-2 sm:p-3 text-center hidden sm:table-cell'>{row.loss}</td>
+												<td className='p-2 sm:p-3 text-center whitespace-nowrap'>
 													{row.goalsFor}:{row.goalsAgainst}
 												</td>
-												<td className='p-3 text-center font-bold'>{row.points}</td>
+												<td className='p-2 sm:p-3 text-center font-bold'>{row.points}</td>
 											</tr>
 										))}
 									</tbody>
@@ -156,48 +156,69 @@ export default async function StatisticsPage({
 								<table className='w-full text-white text-left border-collapse'>
 									<thead>
 										<tr className='bg-zinc-700 text-sm'>
-											<th className='p-3'>#</th>
-											<th className='p-3'>Zawodnik</th>
-											<th className='p-3'>Pozycja</th>
-											<th className='p-3 text-center'>Mecze</th>
-											<th className='p-3 text-center'>Gole</th>
-											<th className='p-3 text-center'>Asysty</th>
-											<th className='p-3 text-center'>Żółte</th>
-											<th className='p-3 text-center'>Czerwone</th>
+											<th className='p-2 sm:p-3'>#</th>
+											<th className='p-2 sm:p-3'>Zawodnik</th>
+											<th className='p-2 sm:p-3 hidden sm:table-cell'>Pozycja</th>
+											<th
+												className={`p-2 sm:p-3 text-center ${
+													primaryStatKey === 'matchesPlayed' ? '' : 'hidden sm:table-cell'
+												}`}>
+												Mecze
+											</th>
+											<th
+												className={`p-2 sm:p-3 text-center ${
+													primaryStatKey === 'goals' ? '' : 'hidden sm:table-cell'
+												}`}>
+												Gole
+											</th>
+											<th
+												className={`p-2 sm:p-3 text-center ${
+													primaryStatKey === 'assists' ? '' : 'hidden sm:table-cell'
+												}`}>
+												Asysty
+											</th>
+											<th className='p-2 sm:p-3 text-center hidden sm:table-cell'>Żółte</th>
+											<th className='p-2 sm:p-3 text-center hidden sm:table-cell'>Czerwone</th>
 										</tr>
 									</thead>
 									<tbody>
 										{leaderboard.map((row, i) => (
 											<tr key={row.player.id} className='border-t border-zinc-700'>
-												<td className='p-3'>{i + 1}</td>
-												<td className='p-3 font-semibold'>
+												<td className='p-2 sm:p-3'>{i + 1}</td>
+												<td className='p-2 sm:p-3 font-semibold'>
 													<Link
 														href={`/team/${row.player.id}`}
 														className='hover:text-pink-400'>
 														#{row.player.number} {playerName(row.player)}
 													</Link>
 												</td>
-												<td className='p-3 text-zinc-400'>{row.player.position}</td>
+												<td className='p-2 sm:p-3 text-zinc-400 hidden sm:table-cell'>
+													{row.player.position}
+												</td>
 												<td
-													className={`p-3 text-center ${
-														primaryStatKey === 'matchesPlayed' ? 'font-bold text-pink-400' : ''
+													className={`p-2 sm:p-3 text-center ${
+														primaryStatKey === 'matchesPlayed'
+															? 'font-bold text-pink-400'
+															: 'hidden sm:table-cell'
 													}`}>
 													{row.matchesPlayed}
 												</td>
 												<td
-													className={`p-3 text-center ${
-														primaryStatKey === 'goals' ? 'font-bold text-pink-400' : ''
+													className={`p-2 sm:p-3 text-center ${
+														primaryStatKey === 'goals' ? 'font-bold text-pink-400' : 'hidden sm:table-cell'
 													}`}>
 													{row.goals}
 												</td>
 												<td
-													className={`p-3 text-center ${
-														primaryStatKey === 'assists' ? 'font-bold text-pink-400' : ''
+													className={`p-2 sm:p-3 text-center ${
+														primaryStatKey === 'assists'
+															? 'font-bold text-pink-400'
+															: 'hidden sm:table-cell'
 													}`}>
 													{row.assists}
 												</td>
-												<td className='p-3 text-center'>{row.yellowCards}</td>
-												<td className='p-3 text-center'>{row.redCards}</td>
+												<td className='p-2 sm:p-3 text-center hidden sm:table-cell'>{row.yellowCards}</td>
+												<td className='p-2 sm:p-3 text-center hidden sm:table-cell'>{row.redCards}</td>
 											</tr>
 										))}
 									</tbody>

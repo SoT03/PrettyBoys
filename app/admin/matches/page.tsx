@@ -7,12 +7,12 @@ export default async function AdminMatchesPage() {
 
 	return (
 		<div className='min-h-screen bg-zinc-800 p-6 md:p-10'>
-			<div className='flex items-center justify-between mb-6'>
+			<div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6'>
 				<h1 className='text-3xl font-bold text-white'>Terminarz i wyniki</h1>
 				<div className='flex items-center gap-4'>
 					<Link
 						href='/admin/matches/new'
-						className='px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600'>
+						className='px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 text-sm sm:text-base'>
 						+ Dodaj mecz
 					</Link>
 					<Link href='/admin' className='text-pink-400 hover:underline'>
