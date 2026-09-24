@@ -137,6 +137,50 @@ export async function getPlayerSeasonStats(playerId: string): Promise<PlayerSeas
 	return results;
 }
 
+export interface PlayerMatchLogEntry {
+	match: Match;
+	goals: number;
+	assists: number;
+	yellowCards: number;
+	redCards: number;
+}
+
+export async function getPlayerMatchLog(playerId: string): Promise<PlayerMatchLogEntry[]> {
+	const appearances = await prisma.appearance.findMany({
+		where: { playerId },
+		include: { match: true },
+		orderBy: { match: { date: 'desc' } },
+	});
+
+	const matchIds = appearances.map((a) => a.matchId);
+	const filter = { playerId, matchId: { in: matchIds } };
+
+	const [goals, assists, cards] = await Promise.all([
+		prisma.goal.findMany({ where: filter }),
+		prisma.assist.findMany({ where: filter }),
+		prisma.cardEvent.findMany({ where: filter }),
+	]);
+
+	const countByMatch = (rows: { matchId: string }[]) => {
+		const map = new Map<string, number>();
+		for (const r of rows) map.set(r.matchId, (map.get(r.matchId) ?? 0) + 1);
+		return map;
+	};
+
+	const goalsMap = countByMatch(goals);
+	const assistsMap = countByMatch(assists);
+	const yellowMap = countByMatch(cards.filter((c) => c.type === 'YELLOW'));
+	const redMap = countByMatch(cards.filter((c) => c.type === 'RED'));
+
+	return appearances.map((a) => ({
+		match: a.match,
+		goals: goalsMap.get(a.matchId) ?? 0,
+		assists: assistsMap.get(a.matchId) ?? 0,
+		yellowCards: yellowMap.get(a.matchId) ?? 0,
+		redCards: redMap.get(a.matchId) ?? 0,
+	}));
+}
+
 export async function getPlayerCareerStats(playerId: string) {
 	const [matchesPlayed, goals, assists, yellowCards, redCards] = await Promise.all([
 		prisma.appearance.count({ where: { playerId } }),

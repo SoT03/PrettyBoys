@@ -3,7 +3,13 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Section from '@/components/ui/section';
 import Wrapper from '@/components/wrapper';
-import { getPlayer, getPlayerCareerStats, getPlayerSeasonStats } from '@/lib/data';
+import {
+	getPlayer,
+	getPlayerCareerStats,
+	getPlayerSeasonStats,
+	getPlayerMatchLog,
+	displayScore,
+} from '@/lib/data';
 import { formatDate } from '@/lib/format';
 import logo from '@/assets/logo/logo-noBG.png';
 
@@ -19,9 +25,10 @@ export default async function PlayerPage({
 		notFound();
 	}
 
-	const [career, seasonStats] = await Promise.all([
+	const [career, seasonStats, matchLog] = await Promise.all([
 		getPlayerCareerStats(id),
 		getPlayerSeasonStats(id),
+		getPlayerMatchLog(id),
 	]);
 
 	return (
@@ -106,6 +113,54 @@ export default async function PlayerPage({
 								<p className='text-zinc-400'>Brak danych statystycznych.</p>
 							)}
 						</div>
+					</div>
+				</div>
+
+				<div className='mt-6 p-6 border-2 border-pink-300 rounded-md text-white'>
+					<h2 className='text-xl font-bold mb-4'>Rozegrane mecze</h2>
+					<div className='overflow-x-auto'>
+						<table className='w-full text-left border-collapse'>
+							<thead>
+								<tr className='text-sm text-zinc-400'>
+									<th className='p-2'>Data</th>
+									<th className='p-2'>Przeciwnik</th>
+									<th className='p-2 text-center'>Wynik</th>
+									<th className='p-2'>Wkład</th>
+								</tr>
+							</thead>
+							<tbody>
+								{matchLog.map(({ match, goals, assists, yellowCards, redCards }) => {
+									const score = displayScore(match);
+									const contribution = [
+										goals > 0 ? `⚽×${goals}` : null,
+										assists > 0 ? `🅰️×${assists}` : null,
+										yellowCards > 0 ? '🟨'.repeat(yellowCards) : null,
+										redCards > 0 ? '🟥'.repeat(redCards) : null,
+									].filter(Boolean);
+
+									return (
+										<tr key={match.id} className='border-t border-zinc-700'>
+											<td className='p-2 whitespace-nowrap'>{formatDate(match.date)}</td>
+											<td className='p-2'>
+												{match.opponent}
+												<span className='text-zinc-500 text-xs ml-1'>
+													({match.home ? 'dom' : 'wyjazd'})
+												</span>
+											</td>
+											<td className='p-2 text-center whitespace-nowrap'>
+												{score ? `${score[0]} : ${score[1]}` : '—'}
+											</td>
+											<td className='p-2 text-sm'>
+												{contribution.length > 0 ? contribution.join(' ') : '—'}
+											</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</table>
+						{matchLog.length === 0 && (
+							<p className='text-zinc-400'>Zawodnik nie rozegrał jeszcze żadnego meczu.</p>
+						)}
 					</div>
 				</div>
 			</Wrapper>
