@@ -1,0 +1,20 @@
+[
+	{
+		"season": "2025/2026",
+		"table": [
+			{ "position": 1, "team": "Pretty Boys", "played": 11, "win": 9, "draw": 0, "loss": 2, "goalsFor": 82, "goalsAgainst": 47, "points": 27 },
+			{ "position": 2, "team": "FC Rywal", "played": 11, "win": 8, "draw": 1, "loss": 2, "goalsFor": 60, "goalsAgainst": 38, "points": 25 },
+			{ "position": 3, "team": "Orły Miasta", "played": 11, "win": 6, "draw": 2, "loss": 3, "goalsFor": 45, "goalsAgainst": 40, "points": 20 },
+			{ "position": 4, "team": "Dąb United", "played": 11, "win": 4, "draw": 3, "loss": 4, "goalsFor": 38, "goalsAgainst": 42, "points": 15 }
+		]
+	},
+	{
+		"season": "2024/2025",
+		"table": [
+			{ "position": 2, "team": "Pretty Boys", "played": 18, "win": 12, "draw": 2, "loss": 4, "goalsFor": 58, "goalsAgainst": 30, "points": 38 },
+			{ "position": 1, "team": "FC Rywal", "played": 18, "win": 13, "draw": 1, "loss": 4, "goalsFor": 55, "goalsAgainst": 28, "points": 40 },
+			{ "position": 3, "team": "Orły Miasta", "played": 18, "win": 9, "draw": 3, "loss": 6, "goalsFor": 42, "goalsAgainst": 35, "points": 30 },
+			{ "position": 4, "team": "Dąb United", "played": 18, "win": 5, "draw": 4, "loss": 9, "goalsFor": 30, "goalsAgainst": 48, "points": 19 }
+		]
+	}
+]

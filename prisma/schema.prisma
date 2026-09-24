@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+enum CardType {
+  YELLOW
+  RED
+}
+
+model Player {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  position  String
+  number    Int
+  imageUrl  String?
+  birthDate DateTime?
+  joined    String?
+  bio       String?
+
+  appearances Appearance[]
+  goals       Goal[]
+  assists     Assist[]
+  cards       CardEvent[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Match {
+  id            String   @id @default(cuid())
+  opponent      String
+  date          DateTime
+  location      String?
+  matchType     String   @default("Liga")
+  round         String?
+  home          Boolean  @default(true)
+
+  ourScore      Int?
+  opponentScore Int?
+
+  seasonId      String?
+  season        Season?  @relation(fields: [seasonId], references: [id])
+
+  appearances   Appearance[]
+  goals         Goal[]
+  assists       Assist[]
+  cards         CardEvent[]
+
+  createdAt     DateTime @default(now())
+}
+
+model Appearance {
+  id       String @id @default(cuid())
+  matchId  String
+  match    Match  @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  playerId String
+  player   Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([matchId, playerId])
+}
+
+model Goal {
+  id       String @id @default(cuid())
+  minute   Int?
+  matchId  String
+  match    Match  @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  playerId String
+  player   Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+}
+
+model Assist {
+  id       String @id @default(cuid())
+  matchId  String
+  match    Match  @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  playerId String
+  player   Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+}
+
+model CardEvent {
+  id       String   @id @default(cuid())
+  type     CardType
+  matchId  String
+  match    Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  playerId String
+  player   Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+}
+
+model Season {
+  id     String @id @default(cuid())
+  name   String @unique
+
+  matches   Match[]
+  standings StandingsRow[]
+
+  createdAt DateTime @default(now())
+}
+
+model StandingsRow {
+  id            String @id @default(cuid())
+  seasonId      String
+  season        Season @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  position      Int
+  team          String
+  played        Int
+  win           Int
+  draw          Int
+  loss          Int
+  goalsFor      Int
+  goalsAgainst  Int
+  points        Int
+}
+
+model NewsItem {
+  id      String   @id @default(cuid())
+  slug    String   @unique
+  title   String
+  date    DateTime
+  excerpt String
+  content String
+
+  createdAt DateTime @default(now())
+}

@@ -1,0 +1,56 @@
+[
+	{
+		"id": "1",
+		"name": "Jakub Nowak",
+		"number": 1,
+		"position": "Bramkarz",
+		"birthDate": "1997-03-12",
+		"joined": "2021",
+		"bio": "Pewny siebie bramkarz, filar defensywy Pretty Boys od czterech sezonów."
+	},
+	{
+		"id": "2",
+		"name": "Piotr Kowalski",
+		"number": 4,
+		"position": "Obrońca",
+		"birthDate": "1998-07-22",
+		"joined": "2022",
+		"bio": "Twardy stoper, świetny w grze powietrznej i rozegraniu piłki od tyłu."
+	},
+	{
+		"id": "3",
+		"name": "Adam Wiśniewski",
+		"number": 5,
+		"position": "Obrońca",
+		"birthDate": "1999-01-05",
+		"joined": "2023",
+		"bio": "Szybki i agresywny w odbiorze, coraz częściej wspiera również ofensywę."
+	},
+	{
+		"id": "4",
+		"name": "Tomasz Wójcik",
+		"number": 8,
+		"position": "Pomocnik",
+		"birthDate": "2000-11-30",
+		"joined": "2021",
+		"bio": "Motor napędowy środka pola, odpowiada za tempo gry zespołu."
+	},
+	{
+		"id": "5",
+		"name": "Michał Kamiński",
+		"number": 10,
+		"position": "Pomocnik",
+		"birthDate": "1999-05-18",
+		"joined": "2020",
+		"bio": "Kreator gry z najlepszym okiem do podania w drużynie."
+	},
+	{
+		"id": "6",
+		"name": "Bartosz Lewandowski",
+		"number": 9,
+		"position": "Napastnik",
+		"birthDate": "2001-09-09",
+		"joined": "2022",
+		"bio": "Najskuteczniejszy strzelec klubu w ostatnich sezonach."
+	}
+]

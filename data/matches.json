@@ -1,0 +1,35 @@
+[
+	{
+		"id": "1",
+		"round": "18 Kolejka",
+		"date": "2025-08-24",
+		"time": "13:30",
+		"home": true,
+		"opponent": "FC Rywal",
+		"scoreHome": 2,
+		"scoreAway": 1,
+		"played": true
+	},
+	{
+		"id": "2",
+		"round": "19 Kolejka",
+		"date": "2025-08-31",
+		"time": "16:00",
+		"home": false,
+		"opponent": "Orły Miasta",
+		"scoreHome": 1,
+		"scoreAway": 1,
+		"played": true
+	},
+	{
+		"id": "3",
+		"round": "20 Kolejka",
+		"date": "2025-09-28",
+		"time": "13:30",
+		"home": true,
+		"opponent": "Dąb United",
+		"scoreHome": null,
+		"scoreAway": null,
+		"played": false
+	}
+]
